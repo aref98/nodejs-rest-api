@@ -2,7 +2,8 @@
   "name": "nodejs-rest-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "mocha"
   },
@@ -10,13 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.17.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "chai": "^5.1.2",
+    "@babel/eslint-parser": "^7.25.9",
+    "@babel/preset-env": "^7.26.0",
+    "chai": "^4.3.4",
     "eslint": "^9.15.0",
     "mocha": "^10.8.2",
-    "supertest": "^7.0.0"
+    "supertest": "^6.1.3"
   }
 }
