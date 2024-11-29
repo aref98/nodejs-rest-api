@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import request from 'supertest';
-import app from '../app.js';
+import { app , server } from '../app.js';
 
 describe('GET /', function() {
   it('should return Hello, GitHub Actions!', function(done) {
@@ -44,4 +44,6 @@ describe('POST /user', function() {
         done();
       });
   });
+
 });
+after(() => { server.close(); });

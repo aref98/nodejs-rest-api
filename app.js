@@ -21,8 +21,8 @@ app.post('/user', (req, res) => {
   res.status(201).json(newUser);
 });
 
-app.listen(port, () => {
+const server= app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-export default app;
+export { app,server };
