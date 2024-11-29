@@ -13,9 +13,10 @@
     "express": "^4.21.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "chai": "^5.1.2",
+    "eslint": "^9.15.0",
     "mocha": "^10.8.2",
     "supertest": "^7.0.0"
   }
-
 }
