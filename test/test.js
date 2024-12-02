@@ -98,6 +98,4 @@ describe('Users API', function() {
   });
 });
 
-after(() => {
-  server.close();
-});
+after(() => { if (server && server.close) { server.close(); } });

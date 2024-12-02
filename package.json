@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov --reporter=text mocha"
+    "clean-coverage": "rimraf .nyc_output coverage",
+    "test:coverage": "cross-env NODE_ENV=test nyc --require @babel/register mocha"
   },
   "keywords": [],
   "author": "",
@@ -14,13 +15,33 @@
   "dependencies": {
     "express": "^4.17.1"
   },
+  "nyc": {
+    "include": [
+      "app.js"
+    ],
+    "exclude": [
+      "test/**/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true,
+    "instrument": true,
+    "sourceMap": false
+  },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
+    "@babel/register": "^7.25.9",
+    "babel-plugin-istanbul": "^7.0.0",
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "eslint": "^9.15.0",
     "mocha": "^10.8.2",
     "nyc": "^17.1.0",
+    "rimraf": "^6.0.1",
     "supertest": "^6.3.4"
   }
 }

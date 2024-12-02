@@ -56,9 +56,9 @@ app.delete('/users/:id', (req, res) => {
   users.splice(userIndex, 1);
   res.status(204).send();
 });
+let server;
+if (process.env.NODE_ENV !== 'test') 
+  { const server = app.listen(port, () => { console.log(`Server is running on http://localhost:${port}`); }); } 
 
-const server = app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
 
 export { app, server };
