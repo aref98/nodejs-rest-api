@@ -8,9 +8,11 @@ on:
         type: string
 
 env:
-  "env1.silly": "just a silly varriable"
+  env1_silly: "just a silly variable"
 
-
-        
-        
-      
+jobs:
+  print-env-variable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Environment Variable
+        run: echo "env1_silly:"
