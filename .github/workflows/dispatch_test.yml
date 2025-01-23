@@ -1,45 +1,13 @@
-name: Test Workflow with Delimiters
-
+name: Dot Env Test
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Choose your environment:'
-        required: true
-        default: 'production'
-        type: string
-
-env:
-  ENV$VAR: "value1"
-  env~var: "value2"
-  env*var: "value3"
-  env|var: "value4"
 
 jobs:
-  build&.test:
+  check-dot-env:
     runs-on: ubuntu-latest
-    
+    env:
+      "silly.word": "Hello from a dotted variable!"
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      
-      - name: Print Environment Variables
+      - name: Echo Dot Var
         run: |
-          echo "ENV$VAR: ${{ env.ENV$VAR }}"
-          echo "env~var: ${{ env.env~var }}"
-          echo "env*var: ${{ env.env*var }}"
-          echo "env|var: ${{ env.env|var }}"
-
-  deploy-job:
-    runs-on: ubuntu-latest
-    needs: build&test
-    
-    steps:
-      - name: Setup Environment
-        run: echo "Setting up environment"
-
-      - name: Print Variable from Input
-        run: echo "Environment: ${{ github.event.inputs.environment }}"
-        
-      - name: Attempt Variable with Delimiter
-        run: echo "Attempting unusual variable: ${{ env.env*var }}"
+          echo "Value of silly.word: ${{ env['silly.word'] }}"
