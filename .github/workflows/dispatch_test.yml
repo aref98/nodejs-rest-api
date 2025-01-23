@@ -1,13 +1,17 @@
 name: Dot Env Test
 on:
   workflow_dispatch:
+env:
+  "dot.in.top.level": "Top Level"
 
 jobs:
-  check-dot-env:
+  test-env:
     runs-on: ubuntu-latest
-    env:
-      "silly.word": "Hello from a dotted variable!"
     steps:
-      - name: Echo Dot Var
+      - name: Use Dotted Top-Level Env
+        env:
+          "dot.in.step.level": "Step Level"
         run: |
-          echo "Value of silly.word: ${{ env['silly.word'] }}"
+          echo "Top Level: ${{ env['dot.in.top.level'] }}"
+          echo "Step Level: ${{ env['dot.in.step.level'] }}"
+
