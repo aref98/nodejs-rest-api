@@ -8,7 +8,7 @@ on:
         type: string
 
 env:
-  "env1q#silly": "silly"
+  "env1q!.&@?][#silly": "silly"
 
 jobs:
   print-env-variable:
