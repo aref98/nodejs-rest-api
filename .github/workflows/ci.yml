@@ -2,6 +2,9 @@ name: CI
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,9 +12,14 @@ jobs:
       matrix:
         node-version: [14, 16, 18]
     steps:
-    - uses: actions/checkout@v2
+    - name: Harden the runner (Audit all outbound calls)
+      uses: step-security/harden-runner@4d991eb9b905ef189e4c376166672c3f2f230481 # v2.11.0
+      with:
+        egress-policy: audit
+
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
     - name: Cache Node.js modules
-      uses: actions/cache@v4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
@@ -19,7 +27,7 @@ jobs:
           ${{ runner.os }}-node-${{ matrix.node-version }}-
           ${{ runner.os }}-node-
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 # v2.5.2
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
@@ -27,4 +35,4 @@ jobs:
     - name: Run tests with coverage
       run: npm run test:coverage
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@f32b3a3741e1053eb607407145bc9619351dc93b # v2.1.0
