@@ -1,3 +1,5 @@
+name: Test Deeply Nested Matrix
+
 on:
   workflow_dispatch:
 
@@ -6,9 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # 'param' is the first <matrix_var>
         param:
+          # The list below corresponds to the first <index>
           - name: "config_set_1"
+            # 'nested_groups' is the second <matrix_var>
             nested_groups:
+              # The outer list below corresponds to the second <index>
+              - # The inner list below corresponds to the third <index>
                 - "value_A"
                 - "value_B"
               - - "value_C"
@@ -16,4 +23,5 @@ jobs:
 
     steps:
       - name: "Print nested value"
+        # This demonstrates how to access a value from the nested list-of-lists
         run: echo "Value is ${{ matrix.param.nested_groups[0][0] }}"
