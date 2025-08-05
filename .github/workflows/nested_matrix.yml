@@ -19,4 +19,4 @@ jobs:
 
     steps:
       - name: "Print nested value"
-        run: echo "Value is ${{ matrix.param.nested_groups[0][2][0] }}"
+        run: echo "Value is ${{ matrix.param.nested_groups[1][0]}}"
