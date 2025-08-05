@@ -1,4 +1,4 @@
-name: Test Deeply Nested Matrix
+name: Test Advanced Matrix Strategies
 
 on:
   workflow_dispatch:
@@ -25,3 +25,30 @@ jobs:
       - name: "Print nested value"
         # This demonstrates how to access a value from the nested list-of-lists
         run: echo "Value is ${{ matrix.param.nested_groups[0][0] }}"
+
+  test-matrix-exclude:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Define the base matrix axes
+        os: [ubuntu-latest, windows-latest]
+        version: [1.0, 2.0]
+
+        # 'exclude' is a schema keyword
+        exclude:
+          # This list provides the <index>
+          - # First map in the list
+            # 'os_config' is the first <matrix_var>
+            os_config:
+              # 'details' is the second <matrix_var>
+              details:
+                # 'patch' is the third <matrix_var>
+                patch: "special-patch-for-ubuntu"
+            # We must also specify a value for one of the axes to make the exclusion match
+            os: ubuntu-latest
+      
+    steps:
+      - name: "Run on non-excluded configurations"
+        run: |
+          echo "Running on OS: ${{ matrix.os }} with version: ${{ matrix.version }}"
+          echo "The excluded config was os_config.details.patch: special-patch-for-ubuntu on ubuntu-latest"
