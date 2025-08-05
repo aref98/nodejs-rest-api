@@ -1,37 +1,40 @@
-name: Test jobs.<job_id>.strategy.matrix.exclude.<index>.<matrix_var>.<matrix_var>.<matrix_var>
+name: Test Valid Dynamic-Key Exclude
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-object-exclude:
+  test-dynamic-key-exclude:
     runs-on: ubuntu-latest
+    env:
+      # Define the dynamic key we will use in the exclude rule
+      DYNAMIC_KEY: "beta"
+      
     strategy:
       matrix:
-        # Define a matrix axis using a list of objects
         python_config:
-          - { version: '3.8', type: 'base', patch: 'p1' }
-          - { version: '3.9', type: 'extended', patch: 'p2' }
-          - { version: '3.10', type: 'base', patch: 'p3' }
-
-        # Define a simple second axis
-        arch: [x64, arm64]
+          - version: '3.8'
+            # 'metadata' is the first <matrix_var>
+            metadata:
+              # 'status' is the second <matrix_var>
+              status:
+                stable: true
+                beta: false
+          - version: '3.9'
+            metadata:
+              status:
+                stable: false
+                beta: true
         
         exclude:
-          # This is the item that will generate the target path.
-          # The top-level key 'python_config' matches the matrix axis.
           - python_config:
-              # 'type' is the first <matrix_var>
-              type:
-                # 'details' is the second <matrix_var>
-                details:
-                  # 'status' is the third <matrix_var>
-                  status: "experimental"
-              # This partial match on 'type: extended' is what makes the rule work.
-              # It will exclude the job with python_config.type = 'extended'
+              metadata:
+                status:
+                  # This dynamically resolves to 'beta: true'
+                  # ${{ env.DYNAMIC_KEY }} is the third <matrix_var>
+                  ${{ env.DYNAMIC_KEY }}: true
 
     steps:
       - name: "Show remaining configurations"
         run: |
-          echo "Running Python ${{ matrix.python_config.version }} on ${{ matrix.arch }}"
-          echo "Full config: ${{ toJSON(matrix.python_config) }}"
+          echo "Running Python version ${{ matrix.python_config.version }}"
