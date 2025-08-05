@@ -39,7 +39,7 @@ jobs:
           # This list provides the <index>
           - # First map in the list
             # 'os_config' is the first <matrix_var>
-            os:
+            version:
               # 'details' is the second <matrix_var>
               details:
                 # 'patch' is the third <matrix_var>
