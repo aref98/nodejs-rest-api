@@ -19,5 +19,4 @@ jobs:
 
     steps:
       - name: "Print nested value"
-        # This demonstrates how to access a value from the nested list-of-lists
-        run: echo "Value is ${{ matrix.param.nested_groups[0][0] }}"
+        run: echo "Value is ${{ matrix.param.nested_groups[0][2][0] }}"
