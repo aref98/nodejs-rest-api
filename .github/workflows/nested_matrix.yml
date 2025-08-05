@@ -1,40 +1,19 @@
-name: Test Valid Dynamic-Key Exclude
-
 on:
   workflow_dispatch:
 
 jobs:
-  test-dynamic-key-exclude:
+  test-nested-lists:
     runs-on: ubuntu-latest
-    env:
-      # Define the dynamic key we will use in the exclude rule
-      DYNAMIC_KEY: "beta"
-      
     strategy:
       matrix:
-        python_config:
-          - version: '3.8'
-            # 'metadata' is the first <matrix_var>
-            metadata:
-              # 'status' is the second <matrix_var>
-              status:
-                stable: true
-                beta: false
-          - version: '3.9'
-            metadata:
-              status:
-                stable: false
-                beta: true
-        
-        exclude:
-          - python_config:
-              metadata:
-                status:
-                  # This dynamically resolves to 'beta: true'
-                  # ${{ env.DYNAMIC_KEY }} is the third <matrix_var>
-                  ${{ env.DYNAMIC_KEY }}: true
+        param:
+          - name: "config_set_1"
+            nested_groups:
+                - "value_A"
+                - "value_B"
+              - - "value_C"
+                - "value_D"
 
     steps:
-      - name: "Show remaining configurations"
-        run: |
-          echo "Running Python version ${{ matrix.python_config.version }}"
+      - name: "Print nested value"
+        run: echo "Value is ${{ matrix.param.nested_groups[0][0] }}"
