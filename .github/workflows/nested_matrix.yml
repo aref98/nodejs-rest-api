@@ -1,55 +1,38 @@
-name: Test Advanced Matrix Strategies
+name: Test jobs.<job_id>.strategy.matrix.exclude.<index>.<matrix_var>.<matrix_var>.<matrix_var>
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-nested-lists:
+  test-object-exclude:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # 'param' is the first <matrix_var>
-        param:
-          # The list below corresponds to the first <index>
-          - name: "config_set_1"
-            # 'nested_groups' is the second <matrix_var>
-            nested_groups:
-              # The outer list below corresponds to the second <index>
-              - # The inner list below corresponds to the third <index>
-                - "value_A"
-                - "value_B"
-              - - "value_C"
-                - "value_D"
+        # Define a matrix axis using a list of objects
+        python_config:
+          - { version: '3.8', type: 'base', patch: 'p1' }
+          - { version: '3.9', type: 'extended', patch: 'p2' }
+          - { version: '3.10', type: 'base', patch: 'p3' }
 
-    steps:
-      - name: "Print nested value"
-        # This demonstrates how to access a value from the nested list-of-lists
-        run: echo "Value is ${{ matrix.param.nested_groups[0][0] }}"
-
-  test-matrix-exclude:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # Define the base matrix axes
-        os: [ubuntu-latest, windows-latest]
-        version: [1.0, 2.0]
-
-        # 'exclude' is a schema keyword
+        # Define a simple second axis
+        arch: [x64, arm64]
+        
         exclude:
-          # This list provides the <index>
-          - # This rule will now correctly match and exclude one job
-            os: ubuntu-latest
-            version: 1.0
-            
-            # This is an arbitrary key for path analysis. It is NOT used for matching.
-            # 'arbitrary_data' is the first <matrix_var>
-            arbitrary_data:
-              # 'details' is the second <matrix_var>
-              details:
-                # 'patch' is the third <matrix_var>
-                patch: "special-patch-for-ubuntu"
-      
+          # This is the item that will generate the target path.
+          # The top-level key 'python_config' matches the matrix axis.
+          - python_config:
+              # 'type' is the first <matrix_var>
+              type:
+                # 'details' is the second <matrix_var>
+                details:
+                  # 'status' is the third <matrix_var>
+                  status: "experimental"
+              # This partial match on 'type: extended' is what makes the rule work.
+              # It will exclude the job with python_config.type = 'extended'
+              type: "extended"
+
     steps:
-      - name: "Run on non-excluded configurations"
+      - name: "Show remaining configurations"
         run: |
-          echo "Running on OS: ${{ matrix.os }} with version: ${{ matrix.version }}"
+          echo "Running Python ${{ matrix.python_config.version }} on ${{ matrix.arch }}"
+          echo "Full config: ${{ toJSON(matrix.python_config) }}"
