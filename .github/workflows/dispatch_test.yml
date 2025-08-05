@@ -104,5 +104,5 @@ jobs:
                               level10: value1
 
     steps:
-      - name: Test depth 6
-        run: echo "Depth 6 - level6:${{ matrix.config.level1.level2.level3.level4.level6 }}"
+      - name: Test depth 10
+        run: echo "Depth 10 - level10:${{ matrix.config.level1.level2.level3.level4.level6.level7.level8.level9.level10 }}"
