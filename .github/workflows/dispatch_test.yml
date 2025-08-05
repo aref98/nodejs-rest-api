@@ -1,17 +1,78 @@
-name: Dot Env Test
-on:
-  workflow_dispatch:
-env:
-  "dot.in.top.level": "Top Level"
+name: Matrix Nesting Depth Test
+on: workflow_dispatch
 
 jobs:
-  "test-matrix":
+  test-depth-1:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os.version: [ "ubuntu-18.04", "ubuntu-20.04" ]
+        config:
+          - simple: value1
+          - simple: value2
     steps:
-      - run: echo "::set-output name=output.with.dot::value"
+      - name: Test depth 1
+        run: echo "Depth 1 - simple:${{ matrix.config.simple }}"
 
+  test-depth-2:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - level1:
+              level2: value1
+          - level1:
+              level2: value2
+    steps:
+      - name: Test depth 2
+        run: echo "Depth 2 - level2:${{ matrix.config.level1.level2 }}"
 
+  test-depth-3:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - level1:
+              level2:
+                level3: value1
+          - level1:
+              level2:
+                level3: value2
+    steps:
+      - name: Test depth 3
+        run: echo "Depth 3 - level3:${{ matrix.config.level1.level2.level3 }}"
 
+  test-depth-4:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - level1:
+              level2:
+                level3:
+                  level4: value1
+          - level1:
+              level2:
+                level3:
+                  level4: value2
+    steps:
+      - name: Test depth 4
+        run: echo "Depth 4 - level4:${{ matrix.config.level1.level2.level3.level4 }}"
+
+  test-depth-5:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - level1:
+              level2:
+                level3:
+                  level4:
+                    level5: value1
+          - level1:
+              level2:
+                level3:
+                  level4:
+                    level5: value2
+    steps:
+      - name: Test depth 5
+        run: echo "Depth 5 - level5:${{ matrix.config.level1.level2.level3.level4.level5 }}"
