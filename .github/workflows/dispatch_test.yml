@@ -76,3 +76,25 @@ jobs:
     steps:
       - name: Test depth 5
         run: echo "Depth 5 - level5:${{ matrix.config.level1.level2.level3.level4.level5 }}"
+
+  test-depth-6:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          config:
+            - level1:
+                level2:
+                  level3:
+                    level4:
+                      level5: 
+                        level6: value1
+            - level1:
+                level2:
+                  level3:
+                    level4:
+                      level5:
+                        level6: value1
+
+      steps:
+        - name: Test depth 6
+          run: echo "Depth 6 - level6:${{ matrix.config.level1.level2.level3.level4.level6 }}"
