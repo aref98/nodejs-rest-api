@@ -29,7 +29,6 @@ jobs:
                   status: "experimental"
               # This partial match on 'type: extended' is what makes the rule work.
               # It will exclude the job with python_config.type = 'extended'
-              type: "extended"
 
     steps:
       - name: "Show remaining configurations"
