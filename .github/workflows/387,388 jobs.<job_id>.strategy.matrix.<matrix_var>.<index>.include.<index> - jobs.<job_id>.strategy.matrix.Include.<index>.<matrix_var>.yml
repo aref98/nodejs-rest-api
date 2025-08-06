@@ -14,7 +14,7 @@ jobs:
         
     steps:
       - name: Print Include value
-        run: echo "Value is ${{ matrix.Include[0].param.nested_param.EXCLUDE[1][0] }}"
+        run: echo "Value is ${{ matrix.if[0] }}"
       # - name: Dump matrix JSON
       #   run: |
       #     echo "${{ toJson(matrix) }}"
