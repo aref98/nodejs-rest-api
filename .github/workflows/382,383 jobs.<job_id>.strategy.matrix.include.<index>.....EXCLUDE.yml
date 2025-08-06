@@ -1,4 +1,4 @@
-name: 382,383 jobs.<job_id>.strategy.matrix.include.<index>.....EXCLUDE
+name: 382,383 jobs.<job_id>.strategy.matrix.include.<index>.....EXCLUDE or bad position of include/exclude
 
 on:
   workflow_dispatch:
@@ -14,9 +14,17 @@ jobs:
                 EXCLUDE:
                   - [ "value_A", "value_B" ]
                   - [ "value_C", "value_D" ]
+          - param2:
+              exclude:
+                include:
+                  exclude: DEEP_EXCLUDE
+        
     steps:
       - name: Print nested value
         run: echo "Value is ${{ matrix.param.nested_param.EXCLUDE[1][0] }}"
       - name: Dump matrix JSON
         run: |
           echo "${{ toJson(matrix) }}"
+      - name: Deep exlcude
+        run: |
+          echo "${{ matrix.param2.exclude.include.exclude }}"
