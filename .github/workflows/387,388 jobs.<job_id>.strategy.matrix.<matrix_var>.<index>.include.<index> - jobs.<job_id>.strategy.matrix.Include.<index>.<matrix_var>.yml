@@ -8,16 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        if:
-          - param:
-              nested_param:
-                EXCLUDE:
-                  - [ "value_A", "value_B" ]
-                  - [ "value_C", "value_D" ]
-          - param2:
-            - include:
-              - value
-      
+        if: value
+   
         
     steps:
       - name: Print Include value
@@ -27,4 +19,4 @@ jobs:
       #     echo "${{ toJson(matrix) }}"
       - name: Deep exlcude
         run: |
-          echo " fake include value is: ${{ matrix.if[1].param2[0].include[0] }}"
+          echo " fake include value is: ${{ matrix.if }}"
