@@ -1,0 +1,19 @@
+name: 381 jobs.<job_id>.strategy.matrix.include.<index>.<matrix_var>.<matrix_var>.<matrix_var>.<index>
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-nested-lists:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - param:
+              nested_param:
+                nested_groups:
+                  - [ "value_A", "value_B" ]
+                  - [ "value_C", "value_D" ]
+    steps:
+      - name: Print nested value
+        run: echo "Value is ${{ matrix.param.nested_param.nested_groups[1][0] }}"
