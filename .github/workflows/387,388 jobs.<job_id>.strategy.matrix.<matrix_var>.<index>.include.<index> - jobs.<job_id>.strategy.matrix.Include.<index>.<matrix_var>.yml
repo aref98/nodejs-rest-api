@@ -16,15 +16,15 @@ jobs:
                   - [ "value_C", "value_D" ]
           - param2:
             - include:
-              - 'value'
+              - value
       
         
     steps:
-      - name: Print nested value
+      - name: Print Include value
         run: echo "Value is ${{ matrix.Include[0].param.nested_param.EXCLUDE[1][0] }}"
-      - name: Dump matrix JSON
-        run: |
-          echo "${{ toJson(matrix) }}"
+      # - name: Dump matrix JSON
+      #   run: |
+      #     echo "${{ toJson(matrix) }}"
       - name: Deep exlcude
         run: |
           echo " fake include value is: ${{ matrix.Include[1].param2[0].include[0] }}"
