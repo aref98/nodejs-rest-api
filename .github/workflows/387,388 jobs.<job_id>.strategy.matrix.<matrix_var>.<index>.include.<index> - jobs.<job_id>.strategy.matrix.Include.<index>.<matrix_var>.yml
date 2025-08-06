@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        if: value
+        if:
+          - value
    
         
     steps:
@@ -19,4 +20,4 @@ jobs:
       #     echo "${{ toJson(matrix) }}"
       - name: Deep exlcude
         run: |
-          echo " fake include value is: ${{ matrix.if }}"
+          echo " fake include value is: ${{ matrix.if[0] }}"
