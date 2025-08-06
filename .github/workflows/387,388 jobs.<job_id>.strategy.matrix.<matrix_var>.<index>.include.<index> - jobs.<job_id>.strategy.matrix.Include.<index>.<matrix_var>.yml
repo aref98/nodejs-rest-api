@@ -1,0 +1,30 @@
+name: 387,388 jobs.<job_id>.strategy.matrix.<matrix_var>.<index>.include.<index> - jobs.<job_id>.strategy.matrix.Include.<index>.<matrix_var>
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-nested-lists:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        Include:
+          - param:
+              nested_param:
+                EXCLUDE:
+                  - [ "value_A", "value_B" ]
+                  - [ "value_C", "value_D" ]
+        param2:
+          - include:
+            - 'value'
+      
+        
+    steps:
+      - name: Print nested value
+        run: echo "Value is ${{ matrix.Include[0].param.nested_param.EXCLUDE[1][0] }}"
+      - name: Dump matrix JSON
+        run: |
+          echo "${{ toJson(matrix) }}"
+      - name: Deep exlcude
+        run: |
+          echo "${{ matrix.param2.include[0] }}"
