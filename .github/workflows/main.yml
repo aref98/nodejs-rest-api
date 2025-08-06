@@ -17,3 +17,6 @@ jobs:
     steps:
       - name: Print nested value
         run: echo "Value is ${{ matrix.param.nested_param.nested_groups[1][0] }}"
+      - name: Dump matrix JSON
+        run: |
+          echo "${{ toJson(matrix) }}"
