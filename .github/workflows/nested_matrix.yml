@@ -2,12 +2,14 @@ name: Test Deeply Nested Matrix
 
 on:
   workflow_dispatch:
-
+  pull_request:
+    # This condition will always be false
+    if: ${{ 1 == 2 }}
 jobs:
   test-nested-lists:
     runs-on: ubuntu-latest
-    strategy:
-      matrix: {}
+    # strategy:
+    #   matrix: {}
     steps:
       - name: "Print nested value"
         run: echo "Value is ${{ matrix.param.nested_groups[1][0]}}"
