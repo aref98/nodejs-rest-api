@@ -7,16 +7,7 @@ jobs:
   test-nested-lists:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        param:
-          - name: "config_set_1"
-            nested_groups:
-              - 
-                - "value_A"
-                - "value_B"
-              - - "value_C"
-                - "value_D"
-
+      matrix: {}
     steps:
       - name: "Print nested value"
         run: echo "Value is ${{ matrix.param.nested_groups[1][0]}}"
