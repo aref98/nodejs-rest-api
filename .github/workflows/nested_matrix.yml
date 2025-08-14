@@ -2,8 +2,10 @@ name: Test Deeply Nested Matrix
 
 on:
   workflow_dispatch:
-  create:
-    tags:[]
+  push:
+  release:
+  issue_comment:
+    types: created
   merge_group:
     branches:
       - main
