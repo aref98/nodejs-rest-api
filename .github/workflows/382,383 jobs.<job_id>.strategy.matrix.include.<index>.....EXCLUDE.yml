@@ -1,4 +1,4 @@
-name: 382,383 jobs.<job_id>.strategy.matrix.include.<index>.....EXCLUDE or bad position of include/exclude
+name: 382,383 jobs.<job_id>.strategy.matrix.include.<index>.....EXCLUDE
 
 on:
   workflow_dispatch:
